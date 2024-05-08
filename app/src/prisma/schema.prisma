@@ -12,6 +12,6 @@ model users {
   name      String   @db.VarChar(63)
   email     String   @db.VarChar(63)
   password  String   @db.VarChar(127)
-  updateAt  DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @db.Timestamp(0)
   createdAt DateTime @default(now()) @db.Timestamp(0)
 }

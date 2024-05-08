@@ -1,33 +1,21 @@
-FROM node:alpine AS builder
-
-ENV NODE_ENV build
+FROM node:20 AS builder
 
 USER node
 
-WORKDIR /home/node
+WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json .
+COPY ./.env.production ./.env
 
 RUN npm ci
 
 COPY --chown=node:node . .
 
-RUN npx prisma generate --schema=./src/prisma/schema.prisma \
-    && npm run build \
-    && npm prune --omit=dev
-
-FROM node:alpine AS production
-
-ENV NODE_ENV production
-
-USER node
-
-WORKDIR /home/node
-
-COPY --from=builder --chown=node:node /home/node/package*.json ./
-COPY --from=builder --chown=node:node /home/node/node_modules/ ./node_modules/
-COPY --from=builder --chown=node:node /home/node/dist/ ./dist/
+RUN npm run prisma:push \
+    && npm run build
 
 EXPOSE 3000
 
 CMD ["node", "dist/main"]
+
+
