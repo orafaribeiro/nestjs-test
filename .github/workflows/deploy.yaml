@@ -79,6 +79,13 @@ jobs:
         run: |
           kubectl config get-contexts
 
+      - name: Deploy 2
+        run: |
+          kubectl apply -f ./app/k8s/deployment.yaml
+        env:
+          #IMAGE_TAG: ${{ github.event.head_commit.message }}
+          IMAGE_TAG: ${{ github.sha }}
+
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v3
 
