@@ -30,9 +30,12 @@ jobs:
       - name: Sts GetCallerIdentity
         run: aws sts get-caller-identity
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+      - name: Sts GetCallerIdentity
+        run: kubectl describe configmap aws-auth -n kube-system
+
+      # - name: Login to Amazon ECR
+      #   id: login-ecr
+      #   uses: aws-actions/amazon-ecr-login@v2
 
       # - name: Build, tag, and push docker image to Amazon ECR
       #   env:
@@ -43,19 +46,19 @@ jobs:
       #     docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -f ./app/Dockerfile "app"
       #     docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-      - name: Decrypt large secret
-        run: chmod +x ./decrypt_secret.sh
+      # - name: Decrypt large secret
+      #   run: chmod +x ./decrypt_secret.sh
 
-      - name: Decrypt large secret
-        run: ./decrypt_secret.sh
-        env:
-          KUBECONFIG_PASSPHRASE: ${{ secrets.KUBECONFIG_PASSPHRASE }}
+      # - name: Decrypt large secret
+      #   run: ./decrypt_secret.sh
+      #   env:
+      #     KUBECONFIG_PASSPHRASE: ${{ secrets.KUBECONFIG_PASSPHRASE }}
 
-      - name: Test printing your secret (Remove this step in production)
-        run: cat $HOME/secrets/kubeconfig
+      # - name: Test printing your secret (Remove this step in production)
+      #   run: cat $HOME/secrets/kubeconfig
 
-      - name: Configure kubectl
-        run: mkdir -p ~/.kube && mv $HOME/secrets/kubeconfig ~/.kube/config
+      # - name: Configure kubectl
+      #   run: mkdir -p ~/.kube && mv $HOME/secrets/kubeconfig ~/.kube/config
 
       # - name: Get Kubeconfig content
       #   id: kubeconfig_content
