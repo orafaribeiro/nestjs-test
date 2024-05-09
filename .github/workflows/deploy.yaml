@@ -40,14 +40,21 @@ jobs:
       - name: Configure kubectl
         run: mkdir -p ~/.kube && mv $HOME/secrets/kubeconfig ~/.kube/config
 
-      - name: Set up Kubectl
-        uses: azure/k8s-set-context@v1
-        with:
-          kubeconfig: ~/.kube/config
+      - name: Get Kubeconfig content
+        id: kubeconfig_content
+        run: echo "kubeconfig=$(cat $HOME/secrets/kubeconfig" >> $GITHUB_OUTPUT
 
-      - name: Deploy
-        run: |
-          kubectl config get-contexts
+      - name: Get Kubeconfig content 2
+        run: echo ${{ steps.kubeconfig_content.outputs.kubeconfig }}
+
+      # - name: Set up Kubectl
+      #   uses: azure/k8s-set-context@v1
+      #   with:
+      #     kubeconfig: ~/.kube/config
+
+      # - name: Deploy
+      #   run: |
+      #     kubectl config get-contexts
 
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v3
