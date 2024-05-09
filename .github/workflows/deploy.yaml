@@ -30,6 +30,9 @@ jobs:
       - name: Sts GetCallerIdentity
         run: aws sts get-caller-identity
 
+      - name: Sts GetCallerIdentity
+        run: kubectl config view --minify
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
