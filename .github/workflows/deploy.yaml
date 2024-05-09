@@ -34,14 +34,14 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build, tag, and push docker image to Amazon ECR
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: my-api1
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -f ./app/Dockerfile "app"
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+      # - name: Build, tag, and push docker image to Amazon ECR
+      #   env:
+      #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     REPOSITORY: my-api1
+      #     IMAGE_TAG: ${{ github.sha }}
+      #   run: |
+      #     docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -f ./app/Dockerfile "app"
+      #     docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
       - name: Decrypt large secret
         run: chmod +x ./decrypt_secret.sh
@@ -69,8 +69,8 @@ jobs:
       #   with:
       #     kubeconfig: ${{ secrets.KUBECONFIG_PASSPHRASE }}
 
-      - name: Update kube config
-        run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
+      # - name: Update kube config
+      #   run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
 
       - name: Deploy
         run: |
@@ -84,7 +84,8 @@ jobs:
           env-replacement-list: |
             IMAGE_TAG
         env:
-          IMAGE_TAG: ${{ github.event.head_commit.message }}
+          #IMAGE_TAG: ${{ github.event.head_commit.message }}
+          IMAGE_TAG: 751598201745a8ac3dba884ad734e85dca34fb12
 
       # - name: Deploy 2
       #   run: |
