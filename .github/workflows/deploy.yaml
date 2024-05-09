@@ -27,6 +27,9 @@ jobs:
         run: aws eks list-clusters
 
       - name: Decrypt large secret
+        run: chmod +x ./decrypt_secret.sh
+
+      - name: Decrypt large secret
         run: ./decrypt_secret.sh
         env:
           KUBECONFIG_PASSPHRASE: ${{ secrets.KUBECONFIG_PASSPHRASE }}
