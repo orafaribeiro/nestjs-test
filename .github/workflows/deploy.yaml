@@ -37,8 +37,17 @@ jobs:
       - name: Test printing your secret (Remove this step in production)
         run: cat $HOME/secrets/kubeconfig
 
-      # - name: Configure kubectl
-      #   run: mkdir -p ~/.kube && touch ~/.kube/config && echo ${{ secrets.KUBECONFIG_FILE }} >> ~/.kube/config
+      - name: Configure kubectl
+        run: mkdir -p ~/.kube && mv $HOME/secrets/kubeconfig ~/.kube/config
+
+      - name: Set up Kubectl
+        uses: azure/k8s-set-context@v1
+        with:
+          kubeconfig: ~/.kube/config
+
+      - name: Deploy
+        run: |
+          kubectl config get-contexts
 
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v3
