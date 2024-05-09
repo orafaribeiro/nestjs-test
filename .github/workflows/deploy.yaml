@@ -42,7 +42,7 @@ jobs:
 
       - name: Get Kubeconfig content
         id: kubeconfig_content
-        run: echo "kubeconfig=$(cat $HOME/secrets/kubeconfig" >> $GITHUB_OUTPUT
+        run: echo "kubeconfig=$(cat $HOME/secrets/kubeconfig)" >> $GITHUB_OUTPUT
 
       - name: Get Kubeconfig content 2
         run: echo ${{ steps.kubeconfig_content.outputs.kubeconfig }}
