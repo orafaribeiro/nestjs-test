@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
         - name: nestjs-api
-          image: docker.io/rafaribeiro98/nestjsdocker:0.1.5
+          #image: docker.io/rafaribeiro98/nestjsdocker:0.1.5
+          image: 471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1:0.1.0
           ports:
             - containerPort: 3000
 ---
@@ -25,7 +26,7 @@ kind: Service
 metadata:
   name: nestjs-api-service
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 80
       targetPort: 3000
