@@ -35,14 +35,14 @@ jobs:
           KUBECONFIG_PASSPHRASE: ${{ secrets.KUBECONFIG_PASSPHRASE }}
 
       - name: Test printing your secret (Remove this step in production)
-        run: cat $HOME/secrets/kubeconfig | tr -d " \t\n\r"
+        run: cat $HOME/secrets/kubeconfig
 
       - name: Configure kubectl
         run: mkdir -p ~/.kube && mv $HOME/secrets/kubeconfig ~/.kube/config
 
       - name: Get Kubeconfig content
         id: kubeconfig_content
-        run: echo "kubeconfig=$(cat ~/.kube/config)" >> $GITHUB_OUTPUT
+        run: echo "kubeconfig=$(cat ~/.kube/config | tr -d " \t\n\r")" >> $GITHUB_OUTPUT
 
       - name: Get Kubeconfig content 2
         run: echo ${{ steps.kubeconfig_content.outputs.kubeconfig }}
