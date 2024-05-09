@@ -47,14 +47,14 @@ jobs:
       - name: Get Kubeconfig content 2
         run: echo ${{ steps.kubeconfig_content.outputs.kubeconfig }}
 
-      # - name: Set up Kubectl
-      #   uses: azure/k8s-set-context@v1
-      #   with:
-      #     kubeconfig: cat ~/.kube/config
+      - name: Set up Kubectl
+        uses: azure/k8s-set-context@v1
+        with:
+          kubeconfig: ${{ steps.kubeconfig_content.outputs.kubeconfig }}
 
-      # - name: Deploy
-      #   run: |
-      #     kubectl config get-contexts
+      - name: Deploy
+        run: |
+          kubectl config get-contexts
 
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v3
