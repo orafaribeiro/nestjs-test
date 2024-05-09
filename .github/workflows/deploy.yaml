@@ -18,7 +18,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::471112647960:role/GitHubAction-AssumeRoleWithAction #change to reflect your IAM role’s ARN
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
-          # aws-region: us-east-2
+          aws-region: us-east-2
 
       - name: Sts GetCallerIdentity
         run: aws eks list-clusters
