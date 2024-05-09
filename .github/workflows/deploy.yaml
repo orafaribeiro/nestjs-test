@@ -77,15 +77,19 @@ jobs:
           kubectl config get-contexts
 
       - name: Deploy 2
-        uses: swdotcom/update-and-apply-kubernetes-configs@v1
-        with:
-          k8-config-file-paths: app/k8s/deployment.yaml
-          replacement-method: list
-          env-replacement-list: |
-            IMAGE_TAG
-        env:
-          #IMAGE_TAG: ${{ github.event.head_commit.message }}
-          IMAGE_TAG: 751598201745a8ac3dba884ad734e85dca34fb12
+        run: |
+          kubectl get pods
+
+      # - name: Deploy 2
+      #   uses: swdotcom/update-and-apply-kubernetes-configs@v1
+      #   with:
+      #     k8-config-file-paths: app/k8s/deployment.yaml
+      #     replacement-method: list
+      #     env-replacement-list: |
+      #       IMAGE_TAG
+      #   env:
+      #     #IMAGE_TAG: ${{ github.event.head_commit.message }}
+      #     IMAGE_TAG: 751598201745a8ac3dba884ad734e85dca34fb12
 
       # - name: Deploy 2
       #   run: |
