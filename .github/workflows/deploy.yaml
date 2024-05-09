@@ -27,7 +27,7 @@ jobs:
         run: aws eks list-clusters
 
       - name: Configure kubectl
-        run: mkdir -p ~/.kube && echo "${secrets.KUBECONFIG_FILE}"
+        run: mkdir -p ~/.kube && echo ${{ secrets.KUBECONFIG_FILE }}
 
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v3
