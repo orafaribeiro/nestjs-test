@@ -103,14 +103,15 @@ jobs:
       #   env:
       #     #IMAGE_TAG: ${{ github.event.head_commit.message }}
       #     IMAGE_TAG: 751598201745a8ac3dba884ad734e85dca34fb12
-
       - name: Deploy 2
         run: |
+          export IMAGE_TAG=${{ github.sha }}
+          envsubst < ./app/k8s/deployment.yaml
           kubectl apply -f ./app/k8s/deployment.yaml
-        env:
-          #IMAGE_TAG: ${{ github.event.head_commit.message }}
-          IMAGE_TAG: ${{ github.sha }}
-          #IMAGE_TAG: 751598201745a8ac3dba884ad734e85dca34fb12
+        # env:
+        #   #IMAGE_TAG: ${{ github.event.head_commit.message }}
+        #   IMAGE_TAG: ${{ github.sha }}
+        #   #IMAGE_TAG: 751598201745a8ac3dba884ad734e85dca34fb12
 
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v3
