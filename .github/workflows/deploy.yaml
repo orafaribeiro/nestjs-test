@@ -26,8 +26,16 @@ jobs:
       - name: Sts GetCallerIdentity
         run: aws eks list-clusters
 
-      - name: Configure kubectl
-        run: mkdir -p ~/.kube && touch ~/.kube/config && echo ${{ secrets.KUBECONFIG_FILE }} >> ~/.kube/config
+      - name: Decrypt large secret
+        run: ./decrypt_secret.sh
+        env:
+          KUBECONFIG_PASSPHRASE: ${{ secrets.KUBECONFIG_PASSPHRASE }}
+
+      - name: Test printing your secret (Remove this step in production)
+        run: cat $HOME/secrets/kubeconfig
+
+      # - name: Configure kubectl
+      #   run: mkdir -p ~/.kube && touch ~/.kube/config && echo ${{ secrets.KUBECONFIG_FILE }} >> ~/.kube/config
 
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v3
