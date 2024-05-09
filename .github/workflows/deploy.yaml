@@ -52,9 +52,9 @@ jobs:
         with:
           kubeconfig: cat ~/.kube/config
 
-      # - name: Deploy
-      #   run: |
-      #     kubectl config get-contexts
+      - name: Deploy
+        run: |
+          kubectl config get-contexts
 
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v3
