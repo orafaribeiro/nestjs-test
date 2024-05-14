@@ -20,13 +20,6 @@ jobs:
       - name: Teste
         run: echo ${{ github.event.head_commit.message }}
 
-      # - name: configure aws credentials 1
-      #   uses: aws-actions/configure-aws-credentials@v1.7.0
-      #   with:
-      #     role-to-assume: arn:aws:iam::471112647960:role/GitHubAction-AssumeRoleWithAction #change to reflect your IAM role’s ARN
-      #     role-session-name: GitHub_to_AWS_via_FederatedOIDC
-      #     aws-region: us-east-2
-
       - name: configure aws credentials 2
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -36,9 +29,6 @@ jobs:
 
       - name: Sts GetCallerIdentity
         run: aws sts get-caller-identity
-
-      # - name: Sts GetCallerIdentity
-      #   run: kubectl describe configmap aws-auth -n kube-system
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -53,31 +43,19 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -f ./app/Dockerfile "app"
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-      # - name: Decrypt large secret
-      #   run: chmod +x ./decrypt_secret.sh
+      - name: Decrypt large secret
+        run: chmod +x ./decrypt_secret.sh
 
-      # - name: Decrypt large secret
-      #   run: ./decrypt_secret.sh
-      #   env:
-      #     KUBECONFIG_PASSPHRASE: ${{ secrets.KUBECONFIG_PASSPHRASE }}
+      - name: Decrypt large secret
+        run: ./decrypt_secret.sh
+        env:
+          KUBECONFIG_PASSPHRASE: ${{ secrets.KUBECONFIG_PASSPHRASE }}
 
-      # - name: Test printing your secret (Remove this step in production)
-      #   run: cat $HOME/secrets/kubeconfig
+      - name: Test printing your secret (Remove this step in production)
+        run: cat $HOME/secrets/kubeconfig
 
-      # - name: Configure kubectl
-      #   run: mkdir -p ~/.kube && mv $HOME/secrets/kubeconfig ~/.kube/config
-
-      # - name: Get Kubeconfig content
-      #   id: kubeconfig_content
-      #   run: echo "kubeconfig=$(cat ~/.kube/config | tr -d " \t\n\r")" >> $GITHUB_OUTPUT
-
-      # - name: Get Kubeconfig content 2
-      #   run: echo ${{ steps.kubeconfig_content.outputs.kubeconfig }}
-
-      # - name: Set up Kubectl
-      #   uses: azure/k8s-set-context@v1
-      #   with:
-      #     kubeconfig: ${{ secrets.KUBECONFIG_PASSPHRASE }}
+      - name: Configure kubectl
+        run: mkdir -p ~/.kube && mv $HOME/secrets/kubeconfig ~/.kube/config
 
       - name: Update kube config
         run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
@@ -93,52 +71,7 @@ jobs:
         run: |
           kubectl get pods
 
-      # - name: Deploy 2
-      #   uses: swdotcom/update-and-apply-kubernetes-configs@v1
-      #   with:
-      #     k8-config-file-paths: app/k8s/deployment.yaml
-      #     replacement-method: list
-      #     env-replacement-list: |
-      #       IMAGE_TAG
-      #   env:
-      #     #IMAGE_TAG: ${{ github.event.head_commit.message }}
-      #     IMAGE_TAG: 751598201745a8ac3dba884ad734e85dca34fb12
       - name: Deploy 2
         run: |
           export IMAGE_TAG=${{ github.sha }}
           envsubst < ./app/k8s/deployment.yaml | kubectl apply -f -
-        # env:
-        #   #IMAGE_TAG: ${{ github.event.head_commit.message }}
-        #   IMAGE_TAG: ${{ github.sha }}
-        #   #IMAGE_TAG: 751598201745a8ac3dba884ad734e85dca34fb12
-
-      # - name: Set up QEMU
-      #   uses: docker/setup-qemu-action@v3
-
-      # - name: Set up Docker
-      #   uses: docker/setup-buildx-action@v3
-
-      # - name: Login to Docker Hub
-      #   uses: docker/login-action@v3
-      #   with:
-      #     username: ${{ secrets.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_PASSWORD }}
-
-      # - name: Build Docker image
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: b2mplatform/b2m-track-processes:${{ github.event.head_commit.message }}
-
-      # - name: Configure kubectl
-      #   run: mkdir -p ~/.kube && mv k8s/kubeconfig.yaml ~/.kube/config
-
-      # - uses: swdotcom/update-and-apply-kubernetes-configs@v1
-      #   with:
-      #     k8-config-file-paths: k8s/deployment.yaml
-      #     replacement-method: list
-      #     env-replacement-list: |
-      #       IMAGE_TAG
-      #   env:
-      #     IMAGE_TAG: ${{ github.event.head_commit.message }}
