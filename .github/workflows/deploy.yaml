@@ -34,6 +34,10 @@ jobs:
         run: |
           echo "DATABASE_URL=\"mysql://admin:Admin123456@database-api.cjyuskquoc67.us-east-2.rds.amazonaws.com:3306/nestjs_api"\" >> app/.env
 
+      - name: Env File
+        run: |
+          cat app/.env
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
