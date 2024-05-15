@@ -1,7 +1,7 @@
-build-job:
-  stage: build
+aws-login:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
   script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
+    - aws eks list-clusters
 
 test-job1:
   stage: test

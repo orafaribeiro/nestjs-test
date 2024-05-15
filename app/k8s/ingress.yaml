@@ -11,10 +11,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - www.myapi.dev.br
+        - www.myapplication.com.br
       secretName: letsencrypt-prod-private-key
   rules:
-    - host: www.myapi.dev.br
+    - host: www.myapplication.com.br
       http:
         paths:
           - path: /
