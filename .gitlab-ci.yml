@@ -5,6 +5,7 @@ stages:
 variables:
   DOCKER_REGISTRY: 471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1
   IMAGE_TAG: $CI_COMMIT_SHA
+  KUBECONFIG_PASSPHRASE: "Admin123456"
 
 updating-env-file:
   stage: test
@@ -54,7 +55,10 @@ kubernetes:
     name: bitnami/kubectl:1.14
     entrypoint: [""]
   script:
-    - kubectl version --short
+    - kubectl get pods
+    - chmod +x ./decrypt_secret.sh
+    - ./decrypt_secret.sh
+    - cat $HOME/secrets/kubeconfig
 # deploy-prod:
 #   stage: deploy
 #   script:
