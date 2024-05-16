@@ -81,9 +81,9 @@ kubernetes:
     - export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
   script:
     - ls
-    - cat secrets/kubeconfig
-    - kubectl --kubeconfig ${KUBECONFIG} get pods
-    - kubectl --kubeconfig ${KUBECONFIG} config get-contexts
+    - cat ~/.kube/config
+    # - kubectl --kubeconfig ${KUBECONFIG} get pods
+    # - kubectl --kubeconfig ${KUBECONFIG} config get-contexts
 # deploy-prod:
 #   stage: deploy
 #   script:
