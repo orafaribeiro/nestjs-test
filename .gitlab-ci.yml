@@ -14,12 +14,12 @@ updating-env-file:
     ECR_URL: 471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1
     IMAGE_TAG: 0.0.10
   script:
+    - sudo service docker start
     - echo "DATABASE_URL=\"mysql://admin:Admin123456@database-api.cjyuskquoc67.us-east-2.rds.amazonaws.com:3306/nestjs_api"\" >> ./app/.env
     - cat ./app/.env
     - aws eks list-clusters
     - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin $ECR_URL
     - docker build -t $ECR_URL:$IMAGE_TAG -f ./app/Dockerfile "app"
-    - sudo service docker start
     - docker push $ECR_URL:$IMAGE_TAG
 
 # veryfing-env-file:
