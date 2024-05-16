@@ -82,8 +82,8 @@ kubernetes:
   script:
     - ls
     - cat $KUBECONFIG
-    # - kubectl --kubeconfig ${KUBECONFIG} get pods
-    # - kubectl --kubeconfig ${KUBECONFIG} config get-contexts
+    - kubectl --kubeconfig ${KUBECONFIG} get pods
+    - kubectl --kubeconfig ${KUBECONFIG} config get-contexts
 # deploy-prod:
 #   stage: deploy
 #   script:
