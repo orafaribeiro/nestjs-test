@@ -84,6 +84,8 @@ kubernetes:
     - cat $KUBECONFIG
     - kubectl --kubeconfig ${KUBECONFIG} get pods
     - kubectl --kubeconfig ${KUBECONFIG} config get-contexts
+    #- sed -i 's/<IMAGE_TAG>/'${CI_COMMIT_SHORT_SHA}'/g' deployment.yaml
+    - kubectl apply ./app/k8s/deployment.yaml
 # deploy-prod:
 #   stage: deploy
 #   script:
