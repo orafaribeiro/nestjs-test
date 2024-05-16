@@ -13,7 +13,7 @@ listing-dir:
 
 veryfing-env-file:
   script:
-    - cat app/.env
+    - cat ./app/.env
 
 deploy-prod:
   stage: deploy
