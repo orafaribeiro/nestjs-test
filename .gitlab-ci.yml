@@ -4,13 +4,17 @@ aws-login:
     - aws eks list-clusters
 
 updating-env-file:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
   script:
     - echo "DATABASE_URL=\"mysql://admin:Admin123456@database-api.cjyuskquoc67.us-east-2.rds.amazonaws.com:3306/nestjs_api"\" >> ./app/.env
     - cat ./app/.env
+    - aws eks list-clusters
+    - aws ecr get-login-password --region us-east-2
 
-listing-dir:
-  script:
-    - ls
+# listing-dir:
+#   image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+#   script:
+#     - aws eks list-clusters
 
 # veryfing-env-file:
 #   script:
