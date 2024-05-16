@@ -41,7 +41,8 @@ variables:
 
 kubernetes:
   image:
-    name: bitnami/kubectl:1.14
+    #name: bitnami/kubectl:1.14
+    name: docker:latest
     entrypoint: [""]
   before_script:
     # - chmod +x ./decrypt_secret.sh
