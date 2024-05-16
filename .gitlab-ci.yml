@@ -58,7 +58,7 @@ kubernetes:
     #- cat ./secrets/kubeconfig
     - mkdir -p ~/.kube && mv ./secrets/kubeconfig ~/.kube/config
     - cat ~/.kube/config
-    # - kubectl config get-contexts
+    - kubectl config get-contexts
 # deploy-prod:
 #   stage: deploy
 #   script:
