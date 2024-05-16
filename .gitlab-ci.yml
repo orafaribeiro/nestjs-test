@@ -55,20 +55,19 @@ kubeconfig:
     #- kubectl get pods
     # - ./decrypt_secret.sh
     - gpg --quiet --batch --yes --decrypt --passphrase="$KUBECONFIG_PASSPHRASE" --output ./secrets/kubeconfig ./app/k8s/kubeconfig.gpg
-    #- cat ./secrets/kubeconfig
-    - mkdir -p ~/.kube && mv ./secrets/kubeconfig ~/.kube/config
-    - cat ~/.kube/config
-    - kubectl config get-contexts
+    - cat ./secrets/kubeconfig
   artifacts:
     paths:
-      - ~/.kube/config
+      - ./secrets/kubeconfig
 
 kubernetes:
   image:
     name: bitnami/kubectl:1.14
     entrypoint: [""]
   before_script:
-    - cat ~/.kube/config
+    - cat ./secrets/kubeconfig
+    # - mkdir -p ~/.kube && mv ./secrets/kubeconfig ~/.kube/config
+    # - cat ~/.kube/config
   script:
     - kubectl get pods
     - kubectl config get-contexts
