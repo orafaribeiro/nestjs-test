@@ -11,8 +11,8 @@ updating-env-file:
   stage: test
   image:
     name: docker:latest
-  # services:
-  #   - docker:dind
+  services:
+    - docker:dind
   variables:
     DOCKER_REGISTRY: 471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1
     IMAGE_TAG: $CI_COMMIT_SHA
