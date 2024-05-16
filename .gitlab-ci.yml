@@ -19,7 +19,7 @@ updating-env-file:
     - aws eks list-clusters
     - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin $ECR_URL
     - docker build -t $ECR_URL:$IMAGE_TAG -f ./app/Dockerfile "app"
-    - systemctl start docker
+    - sudo service docker start
     - docker push $ECR_URL:$IMAGE_TAG
 
 # veryfing-env-file:
