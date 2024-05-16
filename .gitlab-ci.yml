@@ -20,7 +20,7 @@ updating-env-file:
     - echo "DATABASE_URL=\"mysql://admin:Admin123456@database-api.cjyuskquoc67.us-east-2.rds.amazonaws.com:3306/nestjs_api"\" >> ./app/.env
     - cat ./app/.env
     - apk add --no-cache curl jq python3 py3-pip
-    - pip install awscli
+    - pip install awscli --break-system-packages
     - aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY
 
     # - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
