@@ -19,9 +19,14 @@ updating-env-file:
     # - apk add --no-cache curl jq python3 py3-pip
     # - pip install awscli
     # - aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY
-    - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    - unzip awscliv2.zip
-    - ./aws/install
+
+    # - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    # - unzip awscliv2.zip
+    # - ./aws/install
+
+    - apk add --no-cache curl jq python3 py3-pip
+    - python -m pip install awscli
+
     - aws --version
     - docker info
     - docker --version
