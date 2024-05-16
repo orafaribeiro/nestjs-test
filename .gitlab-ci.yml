@@ -55,8 +55,9 @@ kubernetes:
     #- kubectl get pods
     # - ./decrypt_secret.sh
     - gpg --quiet --batch --yes --decrypt --passphrase="$KUBECONFIG_PASSPHRASE" --output ./secrets/kubeconfig ./app/k8s/kubeconfig.gpg
-    - cat ./secrets/kubeconfig
-    # - mkdir -p ~/.kube && mv $HOME/secrets/kubeconfig ~/.kube/config
+    #- cat ./secrets/kubeconfig
+    - mkdir -p ~/.kube && mv ./secrets/kubeconfig ~/.kube/config
+    - cat ~/.kube/config
     # - kubectl config get-contexts
 # deploy-prod:
 #   stage: deploy
