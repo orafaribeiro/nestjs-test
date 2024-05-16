@@ -46,7 +46,7 @@ kubeconfig:
     entrypoint: [""]
   before_script:
     # - chmod +x ./decrypt_secret.sh
-    - mkdir -p ./secrets
+    - mkdir -p secrets
     - apk update
     - apk fetch gnupg
     - apk add gnupg
@@ -54,25 +54,25 @@ kubeconfig:
   script:
     #- kubectl get pods
     # - ./decrypt_secret.sh
-    - gpg --quiet --batch --yes --decrypt --passphrase="$KUBECONFIG_PASSPHRASE" --output ./secrets/kubeconfig ./app/k8s/kubeconfig.gpg
-    - cat ./secrets/kubeconfig
+    - gpg --quiet --batch --yes --decrypt --passphrase="$KUBECONFIG_PASSPHRASE" --output secrets/kubeconfig ./app/k8s/kubeconfig.gpg
+    - cat secrets/kubeconfig
   artifacts:
     paths:
-      - ./secrets/kubeconfig
+      - secrets/kubeconfig
 
 kubernetes:
   image:
     name: bitnami/kubectl:1.14
     entrypoint: [""]
+  dependencies:
+    - kubeconfig
   before_script:
-    - cat ./secrets/kubeconfig
+    - cat secrets/kubeconfig
     # - mkdir -p ~/.kube && mv ./secrets/kubeconfig ~/.kube/config
     # - cat ~/.kube/config
   script:
     - kubectl get pods
     - kubectl config get-contexts
-  dependencies:
-    - "kubeconfig"
 # deploy-prod:
 #   stage: deploy
 #   script:
