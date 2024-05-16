@@ -58,7 +58,7 @@ kubeconfig:
     - cat secrets/kubeconfig
   artifacts:
     paths:
-      - secrets/kubeconfig
+      - secrets/
 
 kubernetes:
   image:
@@ -71,6 +71,7 @@ kubernetes:
   # - mkdir -p ~/.kube && mv ./secrets/kubeconfig ~/.kube/config
   # - cat ~/.kube/config
   script:
+    - ls
     - cat secrets/kubeconfig
     - kubectl get pods
     - kubectl config get-contexts
