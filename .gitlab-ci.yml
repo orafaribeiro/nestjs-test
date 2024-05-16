@@ -50,7 +50,7 @@ updating-env-file:
 #     - cat ./app/.env
 
 kubernetes:
-  image: kubectl:latest
+  image: bitnami/kubectl:latest
   script:
     - kubectl version --short
 # deploy-prod:
