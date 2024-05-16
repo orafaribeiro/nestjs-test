@@ -86,7 +86,7 @@ kubernetes:
     - cat $KUBECONFIG
     - kubectl --kubeconfig ${KUBECONFIG} get pods
     - kubectl --kubeconfig ${KUBECONFIG} config get-contexts
-    #- sed -i 's/<IMAGE_TAG>/'${IMAGE_TAG}'/g' deployment.yaml
+    - sed -i 's/$IMAGE_TAG/'${IMAGE_TAG}'/g' ./app/k8s/deployment.yaml
     - kubectl apply -f ./app/k8s/deployment.yaml
 # deploy-prod:
 #   stage: deploy
