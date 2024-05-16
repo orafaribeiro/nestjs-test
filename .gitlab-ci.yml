@@ -55,7 +55,7 @@ kubernetes:
     name: bitnami/kubectl:1.14
     entrypoint: [""]
   script:
-    - kubectl get pods
+    #- kubectl get pods
     - chmod +x ./decrypt_secret.sh
     - ./decrypt_secret.sh
     - cat $HOME/secrets/kubeconfig
