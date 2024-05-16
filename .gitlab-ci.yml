@@ -39,7 +39,7 @@ variables:
 #   script:
 #     - cat ./app/.env
 
-kubernetes:
+kubeconfig:
   image:
     #name: bitnami/kubectl:1.14
     name: docker:latest
@@ -59,6 +59,21 @@ kubernetes:
     - mkdir -p ~/.kube && mv ./secrets/kubeconfig ~/.kube/config
     - cat ~/.kube/config
     - kubectl config get-contexts
+  artifacts:
+    paths:
+      - ~/.kube/config
+
+kubernetes:
+  image:
+    name: bitnami/kubectl:1.14
+    entrypoint: [""]
+  before_script:
+    - cat ~/.kube/config
+  script:
+    - kubectl get pods
+    - kubectl config get-contexts
+  dependencies:
+    - "kubeconfig"
 # deploy-prod:
 #   stage: deploy
 #   script:
