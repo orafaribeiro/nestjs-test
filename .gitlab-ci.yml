@@ -5,7 +5,11 @@ aws-login:
 
 updating-env-file:
   script:
-    - echo "DATABASE_URL=\"mysql://admin:Admin123456@database-api.cjyuskquoc67.us-east-2.rds.amazonaws.com:3306/nestjs_api"\" >> app/.env
+    - echo "DATABASE_URL=\"mysql://admin:Admin123456@database-api.cjyuskquoc67.us-east-2.rds.amazonaws.com:3306/nestjs_api"\" >> ./app/.env
+
+listing-dir:
+  script:
+    - ls
 
 veryfing-env-file:
   script:
