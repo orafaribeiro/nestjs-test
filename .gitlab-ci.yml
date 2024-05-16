@@ -68,9 +68,11 @@ kubernetes:
     entrypoint: [""]
   dependencies:
     - kubeconfig
-  before_script:
-    # - cat secrets/kubeconfig
-    - mkdir -p ~/.kube && mv secrets/kubeconfig ~/.kube/config
+  variables:
+    KUBECONFIG: secrets/kubeconfig
+  #before_script:
+  # - cat secrets/kubeconfig
+  # - mkdir -p ~/.kube && mv secrets/kubeconfig ~/.kube/config
   # - cat ~/.kube/config
   script:
     - ls
