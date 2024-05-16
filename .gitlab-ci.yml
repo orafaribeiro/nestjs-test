@@ -25,7 +25,7 @@ updating-env-file:
     # - ./aws/install
 
     - apk add --no-cache curl jq python3 py3-pip
-    - python -m pip install awscli
+    - python -m pip install awscli --break-system-packages
 
     - aws --version
     - docker info
