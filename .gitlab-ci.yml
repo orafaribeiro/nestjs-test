@@ -1,9 +1,13 @@
+stages:
+  - test
+
 aws-login:
   image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
   script:
     - aws eks list-clusters
 
 updating-env-file:
+  stage: test
   image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
   variables:
     ECR_URL: 471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1
@@ -14,7 +18,12 @@ updating-env-file:
     - aws eks list-clusters
     - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin $ECR_URL
     - docker build -t $ECR_URL:$IMAGE_TAG -f ./app/Dockerfile "app"
-    - docker push $ECR_URL:$IMAGE_TAG
+    # - docker push $ECR_URL:$IMAGE_TAG
+
+veryfing-env-file:
+  stage: test
+  script:
+    - cat ./app/.env
 
 # listing-dir:
 #   image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
