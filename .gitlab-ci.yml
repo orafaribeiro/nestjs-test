@@ -46,7 +46,7 @@ kubeconfig:
     entrypoint: [""]
   before_script:
     # - chmod +x ./decrypt_secret.sh
-    # - mkdir -p secrets
+    - mkdir -p secrets
     - apk update
     - apk fetch gnupg
     - apk add gnupg
