@@ -72,7 +72,8 @@ kubernetes:
   # - cat ~/.kube/config
   script:
     - ls
-    - cat secrets/kubeconfig
+    # - cat secrets/$CI_PROJECT_PATH/secrets
+    - ls /secrets/$CI_PROJECT_PATH/secrets
     - kubectl get pods
     - kubectl config get-contexts
 # deploy-prod:
