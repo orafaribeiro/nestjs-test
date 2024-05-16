@@ -46,7 +46,7 @@ kubeconfig:
     entrypoint: [""]
   before_script:
     # - chmod +x ./decrypt_secret.sh
-    - mkdir -p secrets
+    # - mkdir -p secrets
     - apk update
     - apk fetch gnupg
     - apk add gnupg
@@ -66,11 +66,12 @@ kubernetes:
     entrypoint: [""]
   dependencies:
     - kubeconfig
-  before_script:
-    - cat secrets/kubeconfig
-    # - mkdir -p ~/.kube && mv ./secrets/kubeconfig ~/.kube/config
-    # - cat ~/.kube/config
+  #before_script:
+  # - cat secrets/kubeconfig
+  # - mkdir -p ~/.kube && mv ./secrets/kubeconfig ~/.kube/config
+  # - cat ~/.kube/config
   script:
+    - cat secrets/kubeconfig
     - kubectl get pods
     - kubectl config get-contexts
 # deploy-prod:
