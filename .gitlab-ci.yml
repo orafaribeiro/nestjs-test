@@ -1,6 +1,6 @@
 stages:
-  - test
-  - deploy
+  - kubeconfig
+  - kubernetes
 
 variables:
   DOCKER_REGISTRY: 471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1
@@ -9,7 +9,7 @@ variables:
 
 # WORKING
 # updating-env-file:
-#   stage: test
+#   stage: kubeconfig
 #   image:
 #     name: docker:latest
 #   services:
@@ -26,7 +26,7 @@ variables:
 #     - docker push $DOCKER_REGISTRY:$IMAGE_TAG
 
 # veryfing-env-file:
-#   stage: test
+#   stage: kubeconfig
 #   script:
 #     - cat ./app/.env
 
@@ -40,6 +40,7 @@ variables:
 #     - cat ./app/.env
 
 kubeconfig:
+  stage: kubeconfig
   image:
     #name: bitnami/kubectl:1.14
     name: docker:latest
@@ -58,9 +59,10 @@ kubeconfig:
     - cat secrets/kubeconfig
   artifacts:
     paths:
-      - secrets/
+      - secrets/kubeconfig
 
 kubernetes:
+  stage: kubernetes
   image:
     name: bitnami/kubectl:1.14
     entrypoint: [""]
@@ -72,8 +74,7 @@ kubernetes:
   # - cat ~/.kube/config
   script:
     - ls
-    # - cat secrets/$CI_PROJECT_PATH/secrets
-    - ls /secrets/$CI_PROJECT_PATH/secrets
+    - cat secrets/kubeconfig
     - kubectl get pods
     - kubectl config get-contexts
 # deploy-prod:
