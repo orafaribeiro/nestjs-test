@@ -1,4 +1,5 @@
 stages:
+  - docker
   - kubeconfig
   - kubernetes
 
@@ -8,22 +9,22 @@ variables:
   KUBECONFIG_PASSPHRASE: "Admin123456"
 
 # WORKING
-# updating-env-file:
-#   stage: kubeconfig
-#   image:
-#     name: docker:latest
-#   services:
-#     - docker:dind
-#   before_script:
-#     - echo "DATABASE_URL=\"mysql://admin:Admin123456@database-api.cjyuskquoc67.us-east-2.rds.amazonaws.com:3306/nestjs_api"\" >> ./app/.env
-#     - cat ./app/.env
-#     - apk add --no-cache curl jq python3 py3-pip
-#     - pip install awscli --break-system-packages
-#     - aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY
-#     - aws --version
-#   script:
-#     - docker build -t $DOCKER_REGISTRY:$IMAGE_TAG -f ./app/Dockerfile "app"
-#     - docker push $DOCKER_REGISTRY:$IMAGE_TAG
+docker:
+  stage: docker
+  image:
+    name: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - echo "DATABASE_URL=\"mysql://admin:Admin123456@database-api.cjyuskquoc67.us-east-2.rds.amazonaws.com:3306/nestjs_api"\" >> ./app/.env
+    - cat ./app/.env
+    - apk add --no-cache curl jq python3 py3-pip
+    - pip install awscli --break-system-packages
+    - aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY
+    - aws --version
+  script:
+    - docker build -t $DOCKER_REGISTRY:$IMAGE_TAG -f ./app/Dockerfile "app"
+    - docker push $DOCKER_REGISTRY:$IMAGE_TAG
 
 # veryfing-env-file:
 #   stage: kubeconfig
@@ -79,12 +80,13 @@ kubernetes:
     - export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
     - export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     - export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+    - export IMAGE_TAG=${IMAGE_TAG}
   script:
     - ls
     - cat $KUBECONFIG
     - kubectl --kubeconfig ${KUBECONFIG} get pods
     - kubectl --kubeconfig ${KUBECONFIG} config get-contexts
-    #- sed -i 's/<IMAGE_TAG>/'${CI_COMMIT_SHORT_SHA}'/g' deployment.yaml
+    #- sed -i 's/<IMAGE_TAG>/'${IMAGE_TAG}'/g' deployment.yaml
     - kubectl apply -f ./app/k8s/deployment.yaml
 # deploy-prod:
 #   stage: deploy
