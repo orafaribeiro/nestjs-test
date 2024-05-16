@@ -11,24 +11,24 @@ updating-env-file:
   stage: test
   image:
     name: docker:latest
-  services:
-    - docker:dind
+  # services:
+  #   - docker:dind
   variables:
     DOCKER_REGISTRY: 471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1
     IMAGE_TAG: $CI_COMMIT_SHA
   before_script:
     - echo "DATABASE_URL=\"mysql://admin:Admin123456@database-api.cjyuskquoc67.us-east-2.rds.amazonaws.com:3306/nestjs_api"\" >> ./app/.env
     - cat ./app/.env
-    # - apk add --no-cache curl jq python3 py3-pip
-    # - pip install awscli
-    # - aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY
+    - apk add --no-cache curl jq python3 py3-pip
+    - pip install awscli
+    - aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY
 
     # - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     # - unzip awscliv2.zip
     # - ./aws/install
 
-    - apk add --no-cache curl jq python3 py3-pip
-    - python -m pip install awscli --break-system-packages
+    # - apk add --no-cache curl jq python3 py3-pip
+    # - python -m pip install awscli --break-system-packages
 
     - aws --version
     # - docker info
