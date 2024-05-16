@@ -54,9 +54,10 @@ kubernetes:
   image:
     name: bitnami/kubectl:1.14
     entrypoint: [""]
+  before_script:
+    - chmod +x ./decrypt_secret.sh
   script:
     #- kubectl get pods
-    # - chmod +x ./decrypt_secret.sh
     - ./decrypt_secret.sh
     - cat $HOME/secrets/kubeconfig
 # deploy-prod:
