@@ -2,10 +2,9 @@ stages:
   - test
   - deploy
 
-aws-login:
-  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
-  script:
-    - aws eks list-clusters
+variables:
+  DOCKER_REGISTRY: 471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1
+  IMAGE_TAG: $CI_COMMIT_SHA
 
 updating-env-file:
   stage: test
@@ -13,9 +12,6 @@ updating-env-file:
     name: docker:latest
   services:
     - docker:dind
-  variables:
-    DOCKER_REGISTRY: 471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1
-    IMAGE_TAG: $CI_COMMIT_SHA
   before_script:
     - echo "DATABASE_URL=\"mysql://admin:Admin123456@database-api.cjyuskquoc67.us-east-2.rds.amazonaws.com:3306/nestjs_api"\" >> ./app/.env
     - cat ./app/.env
@@ -53,8 +49,12 @@ updating-env-file:
 #   script:
 #     - cat ./app/.env
 
-deploy-prod:
-  stage: deploy
+kubernetes:
+  image: kubectl:latest
   script:
-    - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
-  environment: production
+    - kubectl version --short
+# deploy-prod:
+#   stage: deploy
+#   script:
+#     - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
+#   environment: production
