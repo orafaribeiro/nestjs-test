@@ -63,9 +63,10 @@ kubeconfig:
 
 kubernetes:
   stage: kubernetes
-  image:
-    name: bitnami/kubectl:1.14
-    entrypoint: [""]
+  # image:
+  #   name: bitnami/kubectl:1.14
+  #   entrypoint: [""]
+  image: matshareyourscript/aws-helm-kubectl
   dependencies:
     - kubeconfig
   variables:
@@ -81,8 +82,8 @@ kubernetes:
   script:
     - ls
     - cat secrets/kubeconfig
-    - kubectl get pods
-    - kubectl config get-contexts
+    - kubectl --kubeconfig ${KUBECONFIG} get pods
+    - kubectl --kubeconfig ${KUBECONFIG} config get-contexts
 # deploy-prod:
 #   stage: deploy
 #   script:
