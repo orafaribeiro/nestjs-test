@@ -28,7 +28,7 @@ pipeline {
         stage('Deploy Kubernetes') {
             steps{
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
-                    bat 'kubectl get pods'
+                    bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                 }
                 /*withKubeConfig([credentialsId: 'kubeconfig']) {
                     bat 'kubectl get pods'
