@@ -27,7 +27,7 @@ pipeline {
 
         stage('Deploy Kubernetes') {
             steps{
-                withKubeConfig([credentialsId: '4cc18070-d9cf-455d-bb5d-88f8f8d57acd']) {
+                withKubeConfig([credentialsId: 'kubeconfig']) {
                     sh 'kubectl get pods'
                     // sh 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
                     // sh 'kubectl apply -f ./app/k8s/deployment.yaml'
