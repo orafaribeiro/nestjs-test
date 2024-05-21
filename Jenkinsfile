@@ -26,9 +26,6 @@ pipeline {
         }
 
         stage('Deploy Kubernetes') {
-            environment {
-                tag_version = "$BUILD_NUMBER"
-            }
             steps{
                 script{
                     withKubeConfig([credentialsId: '4cc18070-d9cf-455d-bb5d-88f8f8d57acd']) {
