@@ -10,7 +10,7 @@ pipeline {
         stage('Building image') {
             steps{
                 script {
-                    dockerImage = docker.build(registry + ":$BUILD_NUMBER", '-f ./app/Dockerfile')
+                    dockerImage = docker.build('--pull', '--rm', '-f "./app/Dockerfile"', '-t ' + registry + ":$BUILD_NUMBER", 'app')
                 }
             }
         }
