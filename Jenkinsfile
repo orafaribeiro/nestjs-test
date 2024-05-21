@@ -31,7 +31,8 @@ pipeline {
                     bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                 }*/
                 withKubeConfig([credentialsId: 'kubeconfig']) {
-                    bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
+                    bat "$registryCredential"
+                    // bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                     // sh 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
                     // sh 'kubectl apply -f ./app/k8s/deployment.yaml'
                 }
