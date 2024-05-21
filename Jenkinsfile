@@ -17,7 +17,7 @@ pipeline {
 
         stage('Deploy image') {
             steps{
-                script{
+                script {
                     docker.withRegistry("https://" + registry, "ecr:us-east-2:" + registryCredential) {
                         dockerImage.push()
                     }
@@ -30,9 +30,9 @@ pipeline {
                 /*withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
                     bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                 }*/
-                withKubeConfig([credentialsId: 'kubeconfig']) {
-                    bat "$registryCredential"
-                    // bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
+                withKubeConfig([file(credentialsId: 'kubeconfig')]) {
+                    // bat "$registryCredential"
+                    sh 'kubectl get pods'
                     // sh 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
                     // sh 'kubectl apply -f ./app/k8s/deployment.yaml'
                 }
