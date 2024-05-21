@@ -27,14 +27,14 @@ pipeline {
 
         stage('Deploy Kubernetes') {
             steps{
-                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+                /*withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
                     bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
-                }
-                /*withKubeConfig([credentialsId: 'kubeconfig']) {
-                    bat 'kubectl get pods'
+                }*/
+                withKubeConfig([credentialsId: 'kubeconfig']) {
+                    bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                     // sh 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
                     // sh 'kubectl apply -f ./app/k8s/deployment.yaml'
-                }*/
+                }
             }
         }
     }
