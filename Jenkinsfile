@@ -30,7 +30,7 @@ pipeline {
                 /*withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
                     bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                 }*/
-                withKubeConfig([file(credentialsId: 'kubeconfig')]) {
+                withKubeConfig([credentialsId: 'kubeconfig']) {
                     // bat "$registryCredential"
                     sh 'kubectl get pods'
                     // sh 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
