@@ -37,7 +37,7 @@ pipeline {
                     // sh 'kubectl apply -f ./app/k8s/deployment.yaml'
                 }*/
                 withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-access-key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                    bat 'aws eks list-clusters'
+                    bat 'aws eks list-clusters --region us-east-2'
                 }
             }
         }
