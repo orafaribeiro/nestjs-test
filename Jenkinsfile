@@ -30,11 +30,14 @@ pipeline {
                 /*withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
                     bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                 }*/
-                withKubeConfig([credentialsId: 'kubeconfig']) {
+                /*withKubeConfig([credentialsId: 'kubeconfig']) {
                     bat "$registryCredential"
                     // bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                     // sh 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
                     // sh 'kubectl apply -f ./app/k8s/deployment.yaml'
+                }*/
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-access-key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    bat 'aws eks list-clusters'
                 }
             }
         }
