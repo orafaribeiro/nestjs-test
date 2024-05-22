@@ -9,6 +9,7 @@ pipeline {
     stages {
         stage('Building image') {
             steps{
+                // Como gerar um hash único?
                 script {
                     dockerImage = docker.build(registry + ":$BUILD_NUMBER", '-f ./app/Dockerfile ./app')
                 }
@@ -42,9 +43,9 @@ pipeline {
 
                     withKubeConfig([credentialsId: 'kubeconfig']) {
                         bat 'kubectl get pods'
-                        bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                         // bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
-                        // sh 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
+                        // bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
+                        bat 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
                         // sh 'kubectl apply -f ./app/k8s/deployment.yaml'
                     }
 
