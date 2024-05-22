@@ -43,6 +43,7 @@ pipeline {
 
                     withKubeConfig([credentialsId: 'kubeconfig']) {
                         bat 'kubectl get pods'
+                        bat 'wsl chmod +x ./app/k8s/deployment.yaml'
                         bat 'wsl sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
                         bat 'wsl cat ./app/k8s/deployment.yaml'
                         // bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
