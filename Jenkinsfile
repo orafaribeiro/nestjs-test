@@ -7,7 +7,7 @@ pipeline {
     agent any
 
     stages {
-        /*stage('Building image') {
+        stage('Building image') {
             steps{
                 // Como gerar um hash único?
                 script {
@@ -24,7 +24,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
 
         stage('Deploy Kubernetes') {
             steps{
@@ -54,8 +54,10 @@ pipeline {
                         // sh 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                         // sh 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                         // 'C:\\Program Files\\Git\\bin\\bash.exe git --version'
-                        sh 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
-                        sh 'cat ./app/k8s/deployment.yaml'
+                        // sh 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
+                        sh 'export IMAGE_TAG=$BUILD_NUMBER'
+                        sh 'envsubst < ./app/k8s/deployment.yaml | kubectl apply -f -'
+                        // sh 'cat ./app/k8s/deployment.yaml'
                         // sh 'kubectl apply -f ./app/k8s/deployment.yaml'
                     }
 
