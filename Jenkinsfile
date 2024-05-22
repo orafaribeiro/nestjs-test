@@ -43,10 +43,13 @@ pipeline {
 
                     withKubeConfig([credentialsId: 'kubeconfig']) {
                         bat 'kubectl get pods'
-                        bat 'powershell.exe Start-Process -Verb runas -FilePath wsl'
-                        bat 'wsl chmod +x ./app/k8s/deployment.yaml'
-                        bat 'wsl sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
-                        bat 'wsl cat ./app/k8s/deployment.yaml'
+                        bat 'set IMAGE_TAG=$BUILD_NUMBER'
+                        bat 'powershell -Command "(gc ./app/k8s/deployment.yaml) -replace \'$IMAGE_TAG\', "$BUILD_NUMBER" | Out-File -encoding ASCII ./app/k8s/deployment.yaml"'
+                        bat 'dir ./app/k8s/deployment.yaml'
+                        // bat 'powershell.exe Start-Process -Verb runas -FilePath wsl'
+                        // bat 'wsl chmod +x ./app/k8s/deployment.yaml'
+                        // bat 'wsl sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
+                        // bat 'wsl cat ./app/k8s/deployment.yaml'
                         // bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                         // bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                         // 'C:\\Program Files\\Git\\bin\\bash.exe git --version'
