@@ -18,7 +18,7 @@ spec:
         - name: nestjs-api
           #image: docker.io/rafaribeiro98/nestjsdocker:0.1.5
           #image: 471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1:$IMAGE_TAG
-          image: 471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1:IMAGE_TAG
+          image: 471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1:$IMAGE_TAG
           ports:
             - containerPort: 3000
 ---
