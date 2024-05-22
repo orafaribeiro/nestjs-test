@@ -46,7 +46,7 @@ pipeline {
                         bat 'set IMAGE_TAG=$BUILD_NUMBER'
                         bat 'powershell -Command \'(gc ./app/k8s/deployment.yaml) -replace "IMAGE_TAG", "$BUILD_NUMBER"\''
                         // bat 'powershell -Command \'(gc ./app/k8s/deployment.yaml) -replace "IMAGE_TAG", "$BUILD_NUMBER" | Out-File -encoding ASCII ./app/k8s/deployment.yaml\''
-                        bat 'type "./app/k8s/deployment.yaml"'
+                        bat 'type ./app/k8s/deployment.yaml'
                         // bat 'powershell.exe Start-Process -Verb runas -FilePath wsl'
                         // bat 'wsl chmod +x ./app/k8s/deployment.yaml'
                         // bat 'wsl sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
