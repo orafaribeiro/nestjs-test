@@ -43,6 +43,7 @@ pipeline {
 
                     withKubeConfig([credentialsId: 'kubeconfig']) {
                         bat 'kubectl get pods'
+                        bat 'powershell.exe Start-Process -Verb runas -FilePath wsl'
                         bat 'wsl chmod +x ./app/k8s/deployment.yaml'
                         bat 'wsl sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
                         bat 'wsl cat ./app/k8s/deployment.yaml'
