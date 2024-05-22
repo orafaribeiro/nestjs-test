@@ -56,7 +56,7 @@ pipeline {
                         // 'C:\\Program Files\\Git\\bin\\bash.exe git --version'
                         // sh 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
                         sh 'export BUILD_NUMBER=$BUILD_NUMBER'
-                        sh "sed -i 's/$IMAGE_TAG/'$BUILD_NUMBER'/g' ./app/k8s/deployment.yaml"
+                        sh "sed -i 's/IMAGE_TAG/'$BUILD_NUMBER'/g' ./app/k8s/deployment.yaml"
                         sh "cat ./app/k8s/deployment.yaml"
                         // sh 'envsubst < ./app/k8s/deployment.yaml | kubectl apply -f -'
                         // sh 'envsubst < ./app/k8s/deployment.yaml | cat -'
