@@ -45,7 +45,7 @@ pipeline {
                         bat 'kubectl get pods'
                         // bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
                         // bat 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
-                        bat 'C:\Program Files\Git\bin\bash.exe git --version'
+                        bat 'C:\\Program Files\\Git\\bin\\bash.exe git --version'
                         // bat 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
                         // sh 'kubectl apply -f ./app/k8s/deployment.yaml'
                     }
