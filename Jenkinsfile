@@ -10,13 +10,13 @@ pipeline {
         stage('update env') {
             steps {
                 withCredentials([string(credentialsId: 'DATABASE_PASSWORD', variable: ''), string(credentialsId: 'DATABASE_USER', variable: ''), string(credentialsId: 'DATABASE_HOST', variable: ''), string(credentialsId: 'DATABASE_PORT', variable: ''), string(credentialsId: 'DATABASE_NAME', variable: '')]) {
-                    sh 'echo $DATABASE_USER, $DATABASE_HOST'
+                    sh "echo $DATABASE_USER, $DATABASE_HOST"
                 }
                 // sh 'echo "DATABASE_URL=\"mysql://$DATABASE_USER:$DATABASE_PASSWORD@$DATABASE_HOST:$DATABASE_PORT/$DATABASE_NAME"\" >> ./app/.env'
             }
         }
 
-        stage('Building image') {
+        /*stage('Building image') {
             // Adicionar variáveis de ambiente no arquivo .env
             steps{
                 // Como gerar um hash único?
@@ -38,25 +38,12 @@ pipeline {
 
         stage('Deploy Kubernetes') {
             steps{
-                /*withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
-                    sh 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
-                }*/
-                /*withKubeConfig([credentialsId: 'kubeconfig']) {
-                    sh "$registryCredential"
-                    // sh 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
-                    // sh 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
-                    // sh 'kubectl apply -f ./app/k8s/deployment.yaml'
-                }*/
                 withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-access-key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
 
                     sh 'aws eks list-clusters --region us-east-2'
 
                     withKubeConfig([credentialsId: 'kubeconfig']) {
                         sh 'kubectl get pods'
-                        /*sh 'set IMAGE_TAG=$BUILD_NUMBER'
-                        sh 'powershell -Command \'(gc ./app/k8s/deployment.yaml) -replace "IMAGE_TAG", "$BUILD_NUMBER"\''
-                        // sh 'powershell -Command \'(gc ./app/k8s/deployment.yaml) -replace "IMAGE_TAG", "$BUILD_NUMBER" | Out-File -encoding ASCII ./app/k8s/deployment.yaml\''
-                        sh 'type ./app/k8s/deployment.yaml'*/
                         // sh 'powershell.exe Start-Process -Verb runas -FilePath wsl'
                         // sh 'wsl chmod +x ./app/k8s/deployment.yaml'
                         // sh 'wsl sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
@@ -76,7 +63,7 @@ pipeline {
 
                 }
             }
-        }
+        }*/
     }
 
 }
