@@ -1,6 +1,7 @@
 pipeline {
     environment {
-        registry = '471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1'
+        // registry = '471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1'
+        registry = credentials('AMAZON_ECR')
         registryCredential = 'aws-access-key'
         dockerImage = ''
     }
@@ -33,7 +34,7 @@ pipeline {
             }
         }
 
-        /*stage('Deploy image') {
+        stage('Deploy image') {
             steps{
                 script {
                     docker.withRegistry("https://" + registry, "ecr:us-east-2:" + registryCredential) {
@@ -70,7 +71,7 @@ pipeline {
 
                 }
             }
-        }*/
+        }
     }
 
 }
