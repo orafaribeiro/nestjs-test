@@ -7,7 +7,7 @@ pipeline {
     agent any
 
     stages {
-        /*stage('Building image') {
+        stage('Building image') {
             steps{
                 // Como gerar um hash único?
                 script {
@@ -24,7 +24,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
 
         stage('Deploy Kubernetes') {
             steps{
