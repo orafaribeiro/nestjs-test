@@ -61,7 +61,7 @@ pipeline {
                         // sh 'envsubst < ./app/k8s/deployment.yaml | kubectl apply -f -'
                         // sh 'envsubst < ./app/k8s/deployment.yaml | cat -'
                         // sh 'cat ./app/k8s/deployment.yaml'
-                        // sh 'kubectl apply -f ./app/k8s/deployment.yaml'
+                        sh 'kubectl apply -f ./app/k8s/deployment.yaml'
                     }
 
                 }
