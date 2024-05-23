@@ -25,7 +25,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "jenkins-test" {
   ami                         = "ami-09040d770ffe2224f"
-  instance_type               = "t3.medium"
+  instance_type               = "m5.large"
   key_name                    = "jenkins-test2"
   security_groups             = ["${aws_security_group.security.id}"]
   associate_public_ip_address = true

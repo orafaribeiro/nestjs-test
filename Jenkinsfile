@@ -7,7 +7,17 @@ pipeline {
     agent any
 
     stages {
+        stage('update env') {
+            steps {
+                withCredentials([string(credentialsId: 'DATABASE_PASSWORD', variable: ''), string(credentialsId: 'DATABASE_USER', variable: ''), string(credentialsId: 'DATABASE_HOST', variable: ''), string(credentialsId: 'DATABASE_PORT', variable: ''), string(credentialsId: 'DATABASE_NAME', variable: '')]) {
+                    sh 'echo $DATABASE_USER, $DATABASE_HOST'
+                }
+                // sh 'echo "DATABASE_URL=\"mysql://$DATABASE_USER:$DATABASE_PASSWORD@$DATABASE_HOST:$DATABASE_PORT/$DATABASE_NAME"\" >> ./app/.env'
+            }
+        }
+
         stage('Building image') {
+            // Adicionar variáveis de ambiente no arquivo .env
             steps{
                 // Como gerar um hash único?
                 script {
