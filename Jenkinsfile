@@ -57,21 +57,10 @@ pipeline {
                     sh 'aws eks list-clusters --region us-east-2'
 
                     withKubeConfig([credentialsId: 'kubeconfig']) {
-                        sh 'kubectl get pods'
-                        // sh 'powershell.exe Start-Process -Verb runas -FilePath wsl'
-                        // sh 'wsl chmod +x ./app/k8s/deployment.yaml'
-                        // sh 'wsl sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
-                        // sh 'wsl cat ./app/k8s/deployment.yaml'
-                        // sh 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
-                        // sh 'kubectl --kubeconfig ./app/k8s/kubeconfig get pods'
-                        // 'C:\\Program Files\\Git\\bin\\bash.exe git --version'
-                        // sh 'sed -i "s/$IMAGE_TAG/$BUILD_NUMBER/g" ./app/k8s/deployment.yaml'
+                        sh 'kubectl get pods'                        
                         sh 'export BUILD_NUMBER=$BUILD_NUMBER'
                         sh "sed -i 's/IMAGE_TAG/'${env.GIT_COMMIT}'/g' ./app/k8s/deployment.yaml"
                         sh "cat ./app/k8s/deployment.yaml"
-                        // sh 'envsubst < ./app/k8s/deployment.yaml | kubectl apply -f -'
-                        // sh 'envsubst < ./app/k8s/deployment.yaml | cat -'
-                        // sh 'cat ./app/k8s/deployment.yaml'
                         sh 'kubectl apply -f ./app/k8s/deployment.yaml'
                     }
 
