@@ -1,3 +1,5 @@
+def commitHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true)
+
 pipeline {
     environment {
         // registry = '471112647960.dkr.ecr.us-east-2.amazonaws.com/my-api1'
@@ -8,7 +10,13 @@ pipeline {
     agent any
 
     stages {
-        stage('update env') {
+        stage('veryfing hash') {
+            steps {
+                sh 'echo $commitHash'
+            }
+        }
+
+        /*stage('update env') {
             steps {
                 withCredentials([
                     string(credentialsId: 'DATABASE_PASSWORD', variable: 'DATABASE_PASSWORD'),
@@ -20,12 +28,10 @@ pipeline {
                     // sh 'echo $DATABASE_USER, $DATABASE_HOST, $DATABASE_PASSWORD'
                     sh 'echo "DATABASE_URL=\"mysql://$DATABASE_USER:$DATABASE_PASSWORD@$DATABASE_HOST:$DATABASE_PORT/$DATABASE_NAME"\" >> ./app/.env'
                 }
-                // sh 'echo "DATABASE_URL=\"mysql://$DATABASE_USER:$DATABASE_PASSWORD@$DATABASE_HOST:$DATABASE_PORT/$DATABASE_NAME"\" >> ./app/.env'
             }
         }
 
         stage('Building image') {
-            // Adicionar variáveis de ambiente no arquivo .env
             steps{
                 // Como gerar um hash único?
                 script {
@@ -71,7 +77,7 @@ pipeline {
 
                 }
             }
-        }
+        }*/
     }
 
 }
