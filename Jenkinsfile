@@ -1,4 +1,4 @@
-def commitHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true)
+// def commitHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true)
 
 pipeline {
     environment {
@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('veryfing hash') {
             steps {
-                sh 'echo $commitHash'
+                sh 'env'
             }
         }
 
