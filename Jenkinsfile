@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('veryfing hash') {
             steps {
-                sh 'env.GIT_COMMIT'
+                sh 'echo ${env.GIT_COMMIT}'
             }
         }
 
