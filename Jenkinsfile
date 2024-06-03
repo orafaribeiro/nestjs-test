@@ -55,7 +55,6 @@ pipeline {
                 withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-access-key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
 
                     sh 'aws eks list-clusters --region us-east-2'
-
                     withKubeConfig([credentialsId: 'kubeconfig']) {
                         sh 'kubectl get pods'                        
                         sh 'export BUILD_NUMBER=$BUILD_NUMBER'
